@@ -16,13 +16,13 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
     @Value("${spring.couchbase.connectionString}")
     private String connectionString;
 
-    @Value("${spring.couchbase.bucket.user}")
+    @Value("${spring.couchbase.username}")
     private String userName;
 
-    @Value("${spring.couchbase.bucket.password:password}")
+    @Value("${spring.couchbase.password}")
     private String password;
 
-    @Value("${spring.couchbase.bucket.name:travel-sample}")
+    @Value("${spring.couchbase.bucket.name}")
     private String bucketName;
 
 }
