@@ -1,7 +1,7 @@
 package com.ecom.demo.couchbase.repository;
 
 import com.couchbase.client.java.query.QueryScanConsistency;
-import com.ecom.demo.couchbase.module.User;
+import com.ecom.demo.couchbase.model.User;
 import org.springframework.data.couchbase.repository.Collection;
 import org.springframework.data.couchbase.repository.CouchbaseRepository;
 import org.springframework.data.couchbase.repository.ScanConsistency;

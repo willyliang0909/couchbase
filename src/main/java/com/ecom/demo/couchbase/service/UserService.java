@@ -1,6 +1,6 @@
 package com.ecom.demo.couchbase.service;
 
-import com.ecom.demo.couchbase.module.User;
+import com.ecom.demo.couchbase.model.User;
 import com.ecom.demo.couchbase.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

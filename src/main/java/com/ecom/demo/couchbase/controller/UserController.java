@@ -1,8 +1,7 @@
 package com.ecom.demo.couchbase.controller;
 
-import com.ecom.demo.couchbase.module.User;
+import com.ecom.demo.couchbase.model.User;
 import com.ecom.demo.couchbase.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("")
+    @GetMapping
     public Page<User> test(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
@@ -28,7 +27,8 @@ public class UserController {
         return userService.getAllUser(PageRequest.of(page, size));
     }
 
-    @PostMapping User createUser(@Valid @RequestBody User user) {
+    @PostMapping
+    public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 

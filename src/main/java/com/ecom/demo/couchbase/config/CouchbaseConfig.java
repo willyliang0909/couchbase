@@ -1,7 +1,11 @@
 package com.ecom.demo.couchbase.config;
 
+import com.couchbase.client.core.env.IoConfig;
+import com.couchbase.client.core.error.BucketNotFoundException;
 import com.couchbase.client.core.error.UnambiguousTimeoutException;
+import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.Cluster;
+import com.couchbase.client.java.Collection;
 import com.couchbase.client.java.env.ClusterEnvironment;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,19 +54,37 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
             throw e;
         }
     }
-//
-//    @Bean
-//    public Bucket getCouchbaseBucket(Cluster cluster) {
-//        try {
-//            if (!cluster.buckets().getAllBuckets().containsKey(getBucketName())) {
-//                log.error("Bucket with name {} does not exist. Creating it now", getBucketName());
-//                throw new BucketNotFoundException(bucketName);
-//            }
-//            return cluster.bucket(getBucketName());
-//        } catch (Exception e) {
-//            log.error("Error getting bucket", e);
-//            throw e;
-//        }
+
+//    @Override
+//    protected void configureEnvironment(ClusterEnvironment.Builder builder) {
+//        builder.ioConfig(IoConfig.builder()
+//                .maxHttpConnections(10)
+//                .maxConnectionsPerEndpoint(10)
+//                .build());
 //    }
+
+    @Bean
+    public Bucket getCouchbaseBucket(Cluster cluster) {
+        try {
+            if (!cluster.buckets().getAllBuckets().containsKey(getBucketName())) {
+                log.error("Bucket with name {} does not exist. Creating it now", getBucketName());
+                throw new BucketNotFoundException(bucketName);
+            }
+            return cluster.bucket(getBucketName());
+        } catch (Exception e) {
+            log.error("Error getting bucket", e);
+            throw e;
+        }
+    }
+
+    @Bean(name = "configCollection")
+    public Collection collection(Bucket bucket) {
+        return bucket.scope("mod").collection("config");
+    }
+
+    @Bean
+    public Collection collection1(Bucket bucket) {
+        return bucket.scope("mod").collection("user");
+    }
 
 }
