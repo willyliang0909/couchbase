@@ -30,4 +30,7 @@ public interface TokenRepository extends CouchbaseRepository<Token, String> {
             " where t.memberId = $memberId")
     List<UserTokenDto> select(Integer memberId);
 
+    @Query("#{#n1ql.selectEntity} WHERE #{#n1ql.filter}")
+    List<Token> n1findAll();
+
 }
