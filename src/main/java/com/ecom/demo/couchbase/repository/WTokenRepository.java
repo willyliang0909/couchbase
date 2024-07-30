@@ -20,6 +20,10 @@ public class WTokenRepository {
         return couchbaseTemplate.findById(Token.class).one(id);
     }
 
+    public Token findByIdInScope(String scope, String id) {
+        return couchbaseTemplate.findById(Token.class).inScope(scope).one(id);
+    }
+
     public Collection<? extends Token> findByIds(Collection<String> ids) {
         return couchbaseTemplate.findById(Token.class).all(ids);
     }

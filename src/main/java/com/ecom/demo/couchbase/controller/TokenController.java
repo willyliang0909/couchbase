@@ -4,6 +4,7 @@ import com.ecom.demo.couchbase.dao.ITokenDAO;
 import com.ecom.demo.couchbase.model.Token;
 import com.ecom.demo.couchbase.model.dto.UserTokenDto;
 import com.ecom.demo.couchbase.repository.TokenRepository;
+import com.ecom.demo.couchbase.repository.TokenScopeRepository;
 import com.ecom.demo.couchbase.repository.WTokenRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,14 @@ public class TokenController {
 
     private final TokenRepository tokenRepository;
 
+    private final TokenScopeRepository tokenScopeRepository;
+
     private final WTokenRepository wTokenRepository;
+
+    @GetMapping("/scope/fetToken")
+    public List<Token> scopeFetToken(@RequestParam String fetToken) {
+        return tokenScopeRepository.withScope("seq1").findAllByFetToken(fetToken);
+    }
 
     @GetMapping("/n1/all")
     public List<Token> n1all() {
@@ -45,6 +53,11 @@ public class TokenController {
     @GetMapping("/template/{id}")
     public Token templateFindById(@PathVariable String id) {
         return wTokenRepository.findById(id);
+    }
+
+    @GetMapping("/template/{scope}/{id}")
+    public Token templateFindByIdInScope(@PathVariable String scope, @PathVariable String id) {
+        return wTokenRepository.findByIdInScope(scope, id);
     }
 
     @GetMapping("/template/ids")
