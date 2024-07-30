@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -39,6 +40,37 @@ public class TokenController {
     @GetMapping("/template/all")
     public List<Token> templateAll() {
         return wTokenRepository.findAll();
+    }
+
+    @GetMapping("/template/{id}")
+    public Token templateFindById(@PathVariable String id) {
+        return wTokenRepository.findById(id);
+    }
+
+    @GetMapping("/template/ids")
+    public Collection<? extends Token> templateFindById(@RequestParam Collection<String> ids) {
+        return wTokenRepository.findByIds(ids);
+    }
+
+    @GetMapping("/template/idsAndFetToken")
+    public Collection<? extends Token> templateFindByIdAnd(
+            @RequestParam Collection<String> ids,
+            @RequestParam String fetToken
+    ) {
+        return wTokenRepository.findByIdsInAndFetToken(ids, fetToken);
+    }
+
+    @GetMapping("/idsAndFetToken")
+    public List<Token> findByIdAnd(
+            @RequestParam List<String> tokens,
+            @RequestParam String fetToken
+    ) {
+        return tokenRepository.findByTokenInAndFetToken(tokens, fetToken);
+    }
+
+    @PostMapping("/template/upsert")
+    public Token upsert(@RequestBody Token token) {
+        return wTokenRepository.upsert(token);
     }
 
 

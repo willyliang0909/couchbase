@@ -22,6 +22,8 @@ public interface TokenRepository extends CouchbaseRepository<Token, String> {
 
     List<Token> findAllByMemberIdAndUdidOrderByExpireDateTimeDesc(int memberId, String udid);
 
+    List<Token> findByTokenInAndFetToken(List<String> tokens, String fetToken);
+
     @Query(value = "select meta(t).id as __id, " +
             " t.`scope`, t.memberId, t.fetToken," +
             " u.name, u.email, u.deviceId " +
