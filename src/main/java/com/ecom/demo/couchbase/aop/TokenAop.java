@@ -36,9 +36,11 @@ public class TokenAop {
             Token token = (Token) args[0];
             String name = joinPoint.getSignature().getName();
             if (name.equals("insertToken")) {
-                tokenDAO.insertToken(token);
+                log.info("afterReturning -- insertToken");
+                //tokenDAO.insertToken(token);
             } else if (name.equals("updateToken")) {
-                tokenDAO.updateToken(token);
+                log.info("afterReturning -- updateToken");
+                //tokenDAO.updateToken(token);
             }
         }
     }

@@ -75,9 +75,9 @@ public class TokenController {
 
 
     @PostMapping
-    public void add(@Valid @RequestBody Token token) {
+    public Token add(@Valid @RequestBody Token token) {
         token.setData("a123445678".getBytes(StandardCharsets.UTF_8));
-        tokenDAO.insertToken(token);
+        return tokenDAO.insertToken(token);
     }
 
     @GetMapping

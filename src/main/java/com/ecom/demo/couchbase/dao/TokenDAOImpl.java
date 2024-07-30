@@ -4,8 +4,8 @@ import com.ecom.demo.couchbase.model.Token;
 
 public class TokenDAOImpl implements ITokenDAO {
     @Override
-    public void insertToken(Token token) {
-
+    public Token insertToken(Token token) {
+        return null;
     }
 
     @Override

@@ -14,13 +14,13 @@ public class TokenCouchbaseDAO extends TokenDAOImpl {
 
     @TokenUpdate
     @Override
-    public void insertToken(Token token) {
+    public Token insertToken(Token token) {
 //        boolean isUpdateCache = cacheUtil.isUpdateCache(CacheUtil.tokenCacheFlag);
         boolean isUpdateCache = true;
         if (isUpdateCache) {
-            tokenRepository.save(token);
+            return tokenRepository.save(token);
         } else {
-            super.insertToken(token);
+            return super.insertToken(token);
         }
     }
 
