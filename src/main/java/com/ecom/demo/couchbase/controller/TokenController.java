@@ -4,6 +4,7 @@ import com.ecom.demo.couchbase.dao.ITokenDAO;
 import com.ecom.demo.couchbase.model.Token;
 import com.ecom.demo.couchbase.model.dto.UserTokenDto;
 import com.ecom.demo.couchbase.repository.TokenRepository;
+import com.ecom.demo.couchbase.repository.WTokenRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,19 @@ public class TokenController {
     private final ITokenDAO tokenDAO;
 
     private final TokenRepository tokenRepository;
+
+    private final WTokenRepository wTokenRepository;
+
+    @GetMapping("/n1/all")
+    public List<Token> n1all() {
+        return tokenRepository.n1findAll();
+    }
+
+    @GetMapping("/template/all")
+    public List<Token> templateAll() {
+        return wTokenRepository.findAll();
+    }
+
 
     @PostMapping
     public void add(@Valid @RequestBody Token token) {
