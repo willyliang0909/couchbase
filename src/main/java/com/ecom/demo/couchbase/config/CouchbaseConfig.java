@@ -1,11 +1,11 @@
 package com.ecom.demo.couchbase.config;
 
-import com.couchbase.client.core.env.IoConfig;
 import com.couchbase.client.core.error.BucketNotFoundException;
 import com.couchbase.client.core.error.UnambiguousTimeoutException;
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.Collection;
+import com.couchbase.client.java.Scope;
 import com.couchbase.client.java.env.ClusterEnvironment;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +36,9 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
 
     @Value("${spring.couchbase.bucket.name}")
     private String bucketName;
+
+    @Value("${spring.couchbase.scope.name}")
+    private String scopeName;
 
     @Override
     @Bean(destroyMethod = "disconnect")
@@ -75,6 +78,11 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
             log.error("Error getting bucket", e);
             throw e;
         }
+    }
+
+    @Bean
+    public Scope getCouchbaseScope(Bucket bucket) {
+        return bucket.scope(getScopeName());
     }
 
     @Bean(name = "configCollection")

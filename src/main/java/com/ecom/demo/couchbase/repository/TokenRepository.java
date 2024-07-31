@@ -29,8 +29,11 @@ public interface TokenRepository extends CouchbaseRepository<Token, String> {
             " u.name, u.email, u.deviceId " +
             " from user u " +
             " join token t on t.udid = u.udid" +
-            " where t.memberId = $memberId")
-    List<UserTokenDto> select(Integer memberId);
+            " where t.memberId = $memberId" +
+            " and ($isLast is null or t.isLast = $isLast)" +
+            " and ($isDelete is null or t.isDelete = $isDelete)"
+    )
+    List<UserTokenDto> select(Integer memberId, Boolean isLast, Boolean isDelete);
 
     @Query("#{#n1ql.selectEntity} WHERE #{#n1ql.filter}")
     List<Token> n1findAll();
